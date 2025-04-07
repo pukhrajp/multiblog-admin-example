@@ -1,18 +1,20 @@
+import { NavType } from "../../types/nav";
 import { NavCollapsible } from "./nav-collapsible";
 import { NavGroup } from "./nav-group";
 import { NavItem } from "./nav-item";
 
-export function NavChildren({ items }: { items: any[] }) {
+const navComponents = {
+  "nav-item": NavItem,
+  collapsible: NavCollapsible,
+  group: NavGroup,
+};
+
+export function NavChildren({ items }: { items: NavType[] }) {
   return (
     <>
       {items.map((item, index) => {
-        if (item.type === "nav-item") {
-          return <NavItem key={index} item={item} />;
-        } else if (item.type === "collapsible") {
-          return <NavCollapsible key={index} item={item} />;
-        } else if (item.type === "group") {
-          return <NavGroup key={index} item={item} />;
-        }
+        const NavComponent = navComponents[item.type];
+        return <NavComponent key={index} item={item} />;
       })}
     </>
   );

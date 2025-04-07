@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { NavChildren } from "../ui/nav-children";
+
 import { menus } from "../../lib/menus";
+import { Navbar } from "../ui/navbar";
 
 export function Sidebar() {
   return (
@@ -8,7 +9,7 @@ export function Sidebar() {
       <Link to="/" className="block p-4 text-xl font-bold text">
         mBlog
       </Link>
-      <NavChildren items={menus} />
+      <Navbar items={menus} />
     </aside>
   );
 }

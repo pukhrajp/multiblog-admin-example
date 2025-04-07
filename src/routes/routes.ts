@@ -5,6 +5,7 @@ import { Dashboard } from "../pages/dashboard";
 import { Login } from "../pages/login";
 import { DefaultLayout } from "../components/layouts/default-layout";
 import path from "path";
+import { StaffList } from "../pages/staff/list";
 
 export const routes = [
   {
@@ -15,7 +16,7 @@ export const routes = [
         Component: DefaultLayout,
         children: [
           { index: true, Component: Dashboard },
-          { path: "about", Component: About },
+          { path: "staff", Component: StaffList },
         ],
       },
       {
