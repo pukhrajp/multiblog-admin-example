@@ -1,11 +1,8 @@
-import { Component } from "react";
 import { RootLayout } from "../components/layouts/root";
-import { About } from "../pages/about";
 import { Dashboard } from "../pages/dashboard";
-import { Login } from "../pages/login";
 import { DefaultLayout } from "../components/layouts/default-layout";
-import path from "path";
 import { StaffList } from "../pages/staff/list";
+import { Login } from "../pages/auth/login";
 
 export const routes = [
   {
