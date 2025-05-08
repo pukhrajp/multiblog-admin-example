@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import myAxios from "../../lib/axios";
 import { redirect } from "react-router-dom";
+import { AuthContext } from "../../components/auth/auth-provider/auth-context";
+import { AuthUser } from "../../types/context";
 
 export function Login() {
   const [loginCreds, setLoginCreds] = useState({
     email: "",
     password: "",
   });
+  const { updateAuthUser } = useContext(AuthContext);
 
   function updateEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setLoginCreds((prev) => ({
@@ -23,28 +26,19 @@ export function Login() {
   }
 
   function handleSubmit() {
-    const promise1 = myAxios.get("/test/queue");
-    const promise2 = myAxios.get("/test/queue");
-    const promise3 = myAxios.get("/test/queue");
-
-    Promise.all([promise1, promise2, promise3]).then((res) => {
-      console.log(res);
-    });
-    // myAxios
-    //   .post("/auth/login", loginCreds)
-    //   .then((res) => {
-    //     console.log(res.data.accessToken);
-    //     if (res.data.accessToken) {
-    //       localStorage.setItem("token", res.data.accessToken);
-    //       console.log("redirection not working");
-    //       return redirect("/");
-    //     } else {
-    //       alert("Login failed");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err);
-    //   });
+    myAxios
+      .post("/auth/login", loginCreds)
+      .then((res) => {
+        console.log("response is: ", res);
+        if (res?.data?.data?.accessToken) {
+          localStorage.setItem("accessToken", res.data.data.accessToken);
+        } else {
+          alert("Login failed");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
   return (
     <div>

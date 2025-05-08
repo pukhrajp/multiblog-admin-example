@@ -5,4 +5,16 @@ const myAxios = axios.create({
   timeout: 1000,
 });
 
+myAxios.interceptors.request.use(
+  (config) => {
+    config.headers["Authorization"] = `Bearer ${localStorage.getItem(
+      "accessToken"
+    )}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 export default myAxios;

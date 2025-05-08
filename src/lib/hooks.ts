@@ -12,6 +12,7 @@ export function useWebSocket(url: string) {
     };
 
     ws.current.onmessage = (event) => {
+      //data.channel data.event data.event.handler
       setMessages((prev) => [...prev, event.data]);
     };
 
