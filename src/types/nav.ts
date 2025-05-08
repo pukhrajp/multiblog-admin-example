@@ -28,3 +28,11 @@ export interface NavGroupType {
 }
 
 export type NavType = NavItemType | NavGroupType | NavCollapsibleType;
+
+export interface User {
+  _id: string;
+  name: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

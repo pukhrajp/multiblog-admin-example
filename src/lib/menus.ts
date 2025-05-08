@@ -8,7 +8,7 @@ export const menus: NavType[] = [
       {
         type: "collapsible",
         label: "Staff",
-        icon: "staff",
+        icon: "/src/lib/icons/down-arrow.png",
         children: [
           {
             type: "nav-item",
@@ -39,6 +39,7 @@ export const menus: NavType[] = [
       {
         type: "collapsible",
         label: "Posts",
+        icon: "/src/lib/icons/down-arrow.png",
         children: [
           {
             type: "nav-item",

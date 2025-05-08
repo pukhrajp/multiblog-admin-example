@@ -13,10 +13,13 @@ export function NavCollapsible({ item }: { item: any }) {
     <Collapsible
       open={open}
       onOpenChange={setOpen}
-      className="w-[350px] space-y-2"
+      className="space-y-2"
     >
       <CollapsibleTrigger asChild>
+      <div className="flex items-center cursor-pointer mb-0 justify-between w-[200px]">
         <h2>{item.label}</h2>
+        <img src={item.icon}/>
+      </div>
       </CollapsibleTrigger>
       <CollapsibleContent>
         <NavChildren items={item.children} />

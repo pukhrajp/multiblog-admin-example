@@ -14,7 +14,7 @@ export function NavChildren({ items }: { items: NavType[] }) {
     <>
       {items.map((item, index) => {
         const NavComponent = navComponents[item.type];
-        return <NavComponent key={index} item={item} />;
+        return <div className="flex pl-4"><NavComponent key={index} item={item} /></div>;
       })}
     </>
   );

@@ -4,9 +4,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Axios from "../../../api/axios";
+import { useAppSelector } from "../../../redex/hook";
 
 export function AuthUserPopover() {
+  const navigate = useNavigate();
+  const authUser = useAppSelector((state) => state.authUser);
+  function logout() {
+    Axios.post("/auth/logout")
+      .then(() => {
+        navigate("/auth/login");
+      })
+      .catch((err) => console.error(err));
+  }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -18,11 +29,21 @@ export function AuthUserPopover() {
           />
         </Avatar>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div>
+      <PopoverContent className="bg-sky-50">
+        <div className="flax items-center justify-between p-8 border-b border-gray-200 ">
           <Avatar>
-            <AvatarImage src="/images/user-1.jpg" alt="User's Name" />
+            <AvatarImage
+              className="rounded-full p-6"
+              src="/images/user-1.jpg"
+              alt="User's Name"
+            />
           </Avatar>
+          <div className="flax items-center justify-self-center ">
+            Name: {authUser.name}
+          </div>
+          <div className="flax items-center justify-self-center ">
+            {authUser.email}
+          </div>
         </div>
         <ul>
           <li>
@@ -31,9 +52,12 @@ export function AuthUserPopover() {
             </Link>
           </li>
           <li>
-            <a href="/logout" className="block p-2 hover:bg-gray-200">
+            <div
+              className="block p-2 hover:bg-gray-200 cursor-pointer "
+              onClick={logout}
+            >
               Logout
-            </a>
+            </div>
           </li>
         </ul>
       </PopoverContent>
