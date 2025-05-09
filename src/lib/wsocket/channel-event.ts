@@ -1,4 +1,4 @@
-export class Event {
+export class ChannelEvent {
   private listeners: Function[] = [];
 
   constructor(private eventName: string) {}

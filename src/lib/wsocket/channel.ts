@@ -1,16 +1,16 @@
-import { Event } from "./event";
+import { ChannelEvent } from "./channel-event";
 
 export class Channel {
-  private events: Record<string, Event> = {};
+  private events: Record<string, ChannelEvent> = {};
 
-  constructor(private channelName: string) {}
+  constructor(public channelName: string) {}
 
   bind(eventName: string, callback: (data: any) => void) {
     if (Object.keys(this.events).includes(eventName)) {
       this.events[eventName].addListener(callback);
       return;
     }
-    this.events[eventName] = new Event(eventName);
+    this.events[eventName] = new ChannelEvent(eventName);
     this.events[eventName].addListener(callback);
   }
 
@@ -26,6 +26,12 @@ export class Channel {
       //TODO: check if event has any listeners attached to it
       //if not then simply remove the event from the list
       //if yes, then remove the listener from the event
+    }
+  }
+
+  emit(eventName: string, data: any) {
+    if (Object.keys(this.events).includes(eventName)) {
+      this.events[eventName].emit(data);
     }
   }
 

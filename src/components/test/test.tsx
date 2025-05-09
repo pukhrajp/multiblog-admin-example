@@ -1,5 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useWebSocket } from "../../lib/hooks";
+import { wsSocket } from "../../lib/wsocket";
+
+export function TestComponent() {
+  const [messages, setMessages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const channel = wsSocket.subscribe("test");
+    channel.bind("message", (data: any) => {
+      setMessages((prev) => [...prev, JSON.stringify(data)]);
+    });
+
+    return () => {
+      channel.unbindAll();
+      wsSocket.unsubscribe("test");
+    };
+  });
+
+  function sendMessage() {
+    wsSocket.sendMessage("test", "message", {
+      user: { id: 1, name: "Abhishek" },
+      message: "Hello World",
+    });
+  }
+  return (
+    <div>
+      <h2>WebSocket Test</h2>
+      {messages.map((msg, i) => (
+        <div key={i}>{msg}</div>
+      ))}
+      <div>
+        <input type="text" placeholder="Type a message" />
+        <button onClick={sendMessage}>Send Message</button>
+      </div>
+    </div>
+  );
+}
 
 export function Test() {
   const { messages, sendMessage } = useWebSocket("ws://localhost:3000");
