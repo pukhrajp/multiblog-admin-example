@@ -1,15 +1,15 @@
 import { useContext, useState } from "react";
 import myAxios from "../../lib/axios";
-import { redirect } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../components/auth/auth-provider/auth-context";
-import { AuthUser } from "../../types/context";
 
 export function Login() {
   const [loginCreds, setLoginCreds] = useState({
     email: "",
     password: "",
   });
-  const { updateAuthUser } = useContext(AuthContext);
+  const { authLogin } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   function updateEmail(e: React.ChangeEvent<HTMLInputElement>) {
     setLoginCreds((prev) => ({
@@ -30,8 +30,10 @@ export function Login() {
       .post("/auth/login", loginCreds)
       .then((res) => {
         console.log("response is: ", res);
+
         if (res?.data?.data?.accessToken) {
-          localStorage.setItem("accessToken", res.data.data.accessToken);
+          authLogin(res?.data?.data?.accessToken, res?.data?.data?.user);
+          return;
         } else {
           alert("Login failed");
         }

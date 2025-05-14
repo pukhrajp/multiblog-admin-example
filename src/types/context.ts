@@ -1,11 +1,11 @@
 export interface AuthUser {
-  accessToken?: string;
-  user?: {
-    name: string;
-    email: string;
-  };
+  id: string;
+  name: string;
+  email: string;
 }
 
-export interface AuthUserContext extends AuthUser {
-  updateAuthUser?: (user: AuthUser) => void;
+export interface AuthUserContext {
+  authUser: AuthUser | null;
+  authLogin: (accessToken: string, user: AuthUser) => void;
+  authLogout: () => void;
 }

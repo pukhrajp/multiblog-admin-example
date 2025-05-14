@@ -4,9 +4,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@radix-ui/react-popover";
+import React from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../auth-provider/auth-context";
+import { Button } from "../../ui/button";
 
 export function AuthUserPopover() {
+  const { authUser, authLogout } = React.useContext(AuthContext);
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -26,14 +30,20 @@ export function AuthUserPopover() {
         </div>
         <ul>
           <li>
+            <div>
+              <h4>{authUser?.name}</h4>
+              <p>{authUser?.email}</p>
+            </div>
+          </li>
+          <li>
             <Link to="/about" className="block p-2 hover:bg-gray-200">
               Profile
             </Link>
           </li>
           <li>
-            <a href="/logout" className="block p-2 hover:bg-gray-200">
+            <div className="cursor-pointer" onClick={authLogout}>
               Logout
-            </a>
+            </div>
           </li>
         </ul>
       </PopoverContent>

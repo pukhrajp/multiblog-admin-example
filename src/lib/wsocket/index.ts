@@ -1,4 +1,3 @@
-import { channel } from "diagnostics_channel";
 import { Channel } from "./channel";
 
 export class WsSocket {
@@ -8,16 +7,12 @@ export class WsSocket {
   constructor(
     private url: string,
     options?: {
-      onOpen?: () => void;
+      onOpen?: (wsSocket: WebSocket | null) => void;
       onClose?: () => void;
     }
   ) {
     this.socket = new WebSocket(this.url);
-    this.socket.onopen =
-      options?.onOpen ||
-      (() => {
-        console.log("WebSocket connected");
-      });
+    this.socket.onopen = () => console.log;
 
     this.socket.onclose =
       options?.onClose ||
@@ -76,6 +71,10 @@ export class WsSocket {
   }
 }
 
-const wsSocket = new WsSocket("ws://localhost:3000");
+const wsSocket = new WsSocket("ws://localhost:3000", {
+  onOpen: (socket) => {
+    console.log(socket);
+  },
+});
 
 export { wsSocket };
